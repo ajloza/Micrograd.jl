@@ -84,14 +84,12 @@ end
 
 function relu(x::Value{T}) where T
     out_data = x.data > 0 ? x.data : 0
-
     out = value(out_data,zero(T),(x,),"relu")
     function bwf()
         x.grad += x.data > 0 ? out.grad : 0   # dL/dx = dout/dx (1.0 or 0.0) *  dL/dout (out.grad)
     end
-
-
-
+    out.bw = Backward(bwf)
+    return out
 end
 
 function Base.exp(x::Value{T}) where T
