@@ -1,9 +1,20 @@
 using Micrograd
 
-a = Value(1.0)
-b = Value(2.0)
+a = value(1.0)
+b = value(2.0)
 
-a+b
-a-b
-a*b
-a/b
+c = a+b
+c.grad = 1.0
+c.data
+c.bw.f()
+c
+c.bw()
+
+a
+c.grad = 2
+
+backward(c)
+a
+b
+
+tanh(a)
