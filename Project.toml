@@ -3,6 +3,9 @@ uuid = "0111ca09-cf27-4182-9c51-58dfc6dc6246"
 authors = ["Andrew Loza"]
 version = "0.1.0"
 
+[deps]
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+
 [compat]
 julia = "1"
 
