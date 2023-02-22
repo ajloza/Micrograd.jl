@@ -108,7 +108,6 @@ function backward(x::Value)
     nodes,_ = buildgraph(x)
     x.grad = 1.0
     for n in reverse(nodes)
-        println(n)
         n.bw()
     end
     return nothing
