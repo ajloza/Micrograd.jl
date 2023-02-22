@@ -54,3 +54,4 @@ o = n(x)
 nodes,depth = buildgraph(o)
 
 printgraph(nodes,depth)
+backward(o)

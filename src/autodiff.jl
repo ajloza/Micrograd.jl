@@ -1,15 +1,12 @@
 
-# --------------- types --------------- #
+# --------------- Value types --------------- #
  
-# make a concrete type for the backward function. if we use ::F where
-# {F<:Function} in Value() we can't change the function
+# make a callable concrete type for the backward function.
 struct Backward{F<:Function} f::F end
 (b::Backward)() = b.f()
-
-# null backward fn
 const noback = Backward(()->nothing)
 
-# main type to handle relations and operations for reverse mode backprop
+# main type to handle relations and operations for backprop
 mutable struct Value{T<:AbstractFloat}
     data::T
     grad::T
@@ -18,8 +15,8 @@ mutable struct Value{T<:AbstractFloat}
     bw::Backward
 end
 
-# constructor with defaults
 value(d::T,g::T=zero(T),c=(),o="",bw=noback) where T = Value(d,g,c,o,bw)
+
 
 # --------------- ops --------------- #
 
@@ -36,6 +33,7 @@ end
 Base.:+(x::Value{T},y::T) where T = x+value(y)
 Base.:+(y::T,x::Value{T}) where T = x+value(y)
 
+# define subtraction in terms of unary minus and plus
 Base.:-(x::Value{T},y::Value{T}) where T = x+(-y)
 Base.:-(x::Value{T},y::T) where T = x-value(y)
 Base.:-(y::T,x::Value{T}) where T = value(y)-x
@@ -72,6 +70,17 @@ end
 
 Base.:/(x::Value{T},y::Value{T}) where T = x*y^-1
 
+function Base.exp(x::Value{T}) where T
+    out_data = exp(x.data)
+    out = value(out_data,zero(T),(x,),"exp")
+    function bwf()
+        x.grad += out_data*out.grad
+    end
+    out.bw = Backward(bwf)
+    return out
+end
+
+# some activations
 function Base.tanh(x::Value{T}) where T
     out_data = tanh(x.data)
     out = value(out_data,zero(T),(x,),"tanh")
@@ -87,16 +96,6 @@ function relu(x::Value{T}) where T
     out = value(out_data,zero(T),(x,),"relu")
     function bwf()
         x.grad += x.data > 0 ? out.grad : 0   # dL/dx = dout/dx (1.0 or 0.0) *  dL/dout (out.grad)
-    end
-    out.bw = Backward(bwf)
-    return out
-end
-
-function Base.exp(x::Value{T}) where T
-    out_data = exp(x.data)
-    out = value(out_data,zero(T),(x,),"exp")
-    function bwf()
-        x.grad += out_data*out.grad
     end
     out.bw = Backward(bwf)
     return out
