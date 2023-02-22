@@ -2,8 +2,6 @@
 
 module Micrograd
 
-using StaticArrays
-
 export Value, value, Backward
 export Neuron, neuron, Layer, layer, MLP, mlp
 export buildgraph, buildtopo
