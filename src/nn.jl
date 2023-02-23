@@ -37,3 +37,5 @@ end
 
 function mlp(n_in,n_outs)
     MLP([layer])
+
+end
