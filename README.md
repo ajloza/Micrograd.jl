@@ -14,7 +14,7 @@ This is hopefully useful for education purposes. Any bugs were likely introduced
 
 ## Notes
 
-1. A key component of Micrograd is the visualization of the computation graph. I could not find a simple clean DAG drawing framework that worked out of the box and maintining the repo as dependency free was a priority. Included is a bare-bones polytree drawer for the terminal.
+1. A key component of Micrograd is the visualization of the computation graph. I could not find a simple clean DAG drawing framework that worked out of the box and keeping the code dependency free was a priority. Included is a bare-bones polytree drawer for the terminal.
 
 ## Contributing
 
