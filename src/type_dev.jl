@@ -47,7 +47,7 @@ nodes,depth = buildgraph(c)
 printgraph(nodes,depth)
 
 ## make neuron
-n = neuron(3)
+n = neuron(3,relu)
 x = [1.0,2.0,1.0]
 o = n(x)
 
