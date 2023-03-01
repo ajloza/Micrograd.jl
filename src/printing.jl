@@ -7,6 +7,14 @@ end
 Base.show(io::IO, x::Value) = print(io,"$(prettyvalue(x))")
 Base.show(io::IO,m::MIME"text/plain", x::Value) = print(io,"$(prettyvalue(x))")
 
+function prettylayer(l::Layer)
+    str = "layer: ($(l.inputs), $(l.outputs))"
+    return str
+end
+Base.show(io::IO, x::Layer) = print(io,"$(prettylayer(x))")
+Base.show(io::IO,m::MIME"text/plain", x::Layer) = print(io,"$(prettylayer(x))")
+
+
 """
     printgraph(nodes,depth)
 
