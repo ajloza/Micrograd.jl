@@ -1,6 +1,6 @@
 mutable struct Neuron{T<:AbstractFloat}
     w::Vector{Value{T}}
-    b::Vector{Value{T}}
+    b::Value{T}
 end
 
 """
@@ -9,7 +9,7 @@ Construct a neuron with `n` inputs (features)
 """
 function neuron(n::Int)
     w=value.(rand(n).*2 .-1)
-    b=value.(rand(n).*2 .-1)
+    b=value(rand()*2-1)
     Neuron(w,b)
 end
 
@@ -18,13 +18,13 @@ function (n::Neuron)(x)
     if length(x) != length(n.w)
         error("In calling n(x), expected $(length(n.w)) inputs to neuron, got $(length(x)):\n\tx = $(x)")
     end
-    raw = sum(n.w .* x .+ n.b)
+    raw = sum(n.w .* x)+ n.b
     out = tanh(raw)
     return out
 end
 
 function parameters(n::Neuron)
-    return [n.w,n.b]
+    return [n.w... n.b]
 end
 
 
@@ -56,7 +56,7 @@ function (l::Layer)(x)
 end
 
 function parameters(l::Layer)
-    return parameters.(l.neurons)
+    return collect(Iterators.flatten(parameters.(l.neurons)))
 end
 
 
@@ -83,7 +83,7 @@ function (m::MLP)(x)
 end
 
 function parameters(m::MLP)
-    return parameters.(m.layers)
+    return collect(Iterators.flatten(parameters.(m.layers)))
 end
 
 function loss(y,y_pred,type)
