@@ -10,7 +10,7 @@ Why? With such a clear guide in python, switching languages seemed closer to cre
 >"What I cannot create, I do not understand"
 \- RPF
 
-This is hopefully useful for education purposes. Any bugs were likely introduced in the porting from Andre
+This is hopefully useful for education purposes. Any bugs were likely introduced in the porting from Andrej's implementation.
 
 ## Notes
 
