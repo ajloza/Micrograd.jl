@@ -5,8 +5,7 @@ An implementation of Andrej Karpathy's Micrograd https://github.com/karpathy/mic
  - basic NN
  - No dependencies.
 
-Why? With such a clear guide in python, switching languages seemed closer to creating something to aid my understanding.
-
+Why? With such a clear guide in python, switching languages seemed closer to creating something.
 >"What I cannot create, I do not understand"
 \- RPF
 
