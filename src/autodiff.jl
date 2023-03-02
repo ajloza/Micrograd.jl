@@ -103,6 +103,10 @@ function relu(x::Value{T}) where T
     return out
 end
 
+Base.length(x::Value) = 1
+Base.iterate(x::Value,y) = nothing
+Base.iterate(x::Value) = (x,1)
+
 
 # --------------- computational graph and backprop --------------- #
 

@@ -50,9 +50,9 @@ l(x)
 m = mlp(3,[4,4,1])
 m.layers[1].neurons[1].w[1]
 
-# don't try this is wasn't made for it
 o = m(x)
 nodes,depth = buildgraph(o)
+# don't try this at home, it wasn't made for it
 printgraph(nodes,depth)
 
 # set up the binary classifier from Micrograd
@@ -68,17 +68,17 @@ y = [1.0,-1.0,-1.0,-1.0]
 y_m = m.(X)
 
 #checks
-loss(m,X,y,"hinge")
+m_loss = loss(m,X,y,"hinge")
 regularization(m)
 accuracy(m,X,y)
 objective(m,X,y)
 
-fit(m,X,y)
-
-parameters(m)
 # check that grads are zero
+parameters(m)
 
 backward(m_loss)
+# check that grads have been set
+parameters(m)
 
 # see the new grad
 m.layers[1].neurons[1].w[1]
@@ -95,7 +95,3 @@ backward(l)
 
 
 fit(m,X,y)
-
-y_fit = 
-
-sum(sign.(getfield.(m.(X),:data)).==y_fit)/length(y)
