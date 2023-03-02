@@ -23,7 +23,7 @@ value(d::T,g::T=zero(T),c=(),o="",bw=noback) where T = Value(d,g,c,o,bw)
 function Base.:+(x::Value{T},y::Value{T}) where T 
     out = value(x.data+y.data,zero(T),(x,y),"+")
     function bwf()
-        x.grad += out.grad  # dL/dx = dout/dx (1.0) *  dL/dout (out.grad) = out.grad
+        x.grad += out.grad  # dL/dx = dout/dx * dL/dout = 1.0 (local) * out.grad (passed) = out.grad
         y.grad += out.grad
         return nothing
     end
@@ -69,6 +69,8 @@ function Base.inv(x::Value{T}) where T
 end
 
 Base.:/(x::Value{T},y::Value{T}) where T = x*y^-1
+Base.:/(x::T,y::Value{T}) where T = value(x)*y^-1
+Base.:/(x::Value{T},y::T) where T = x*value(y)^-1
 
 function Base.exp(x::Value{T}) where T
     out_data = exp(x.data)
@@ -92,10 +94,10 @@ function Base.tanh(x::Value{T}) where T
 end
 
 function relu(x::Value{T}) where T
-    out_data = x.data > 0 ? x.data : 0
+    out_data = x.data > 0.0 ? x.data : 0.0
     out = value(out_data,zero(T),(x,),"relu")
     function bwf()
-        x.grad += x.data > 0 ? out.grad : 0   # dL/dx = dout/dx (1.0 or 0.0) *  dL/dout (out.grad)
+        x.grad += x.data > 0.0 ? out.grad : 0.0   # dL/dx = dout/dx (1.0 or 0.0) *  dL/dout (out.grad)
     end
     out.bw = Backward(bwf)
     return out
@@ -120,6 +122,8 @@ function zerograd(x::Value)
     end
     return nothing
 end
+
+
 
 function buildgraph(x::Value)
 

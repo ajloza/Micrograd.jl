@@ -1,12 +1,37 @@
 using Micrograd
-## make neuron
-n = neuron(3,relu)
+
+## make a linear neuron with three inputs and call it
+n = neuron(3,nothing)
 x = [1.0,2.0,1.0]
 o = n(x)
 
-m = mlp(3,[1])
+nodes,depth = buildgraph(o)
+printgraph(nodes,depth)
+
+## make a relu activation neuron with three inputs and call it
+# note the op here is now relu instead of +
+# run this multiple times to see relu effect on a negative value
+n = neuron(3,relu)
+x = [1.0,2.0,1.0]
+o = n(x) 
+
+nodes,depth = buildgraph(o)
+printgraph(nodes,depth)
+
+
+## make a layer of a single neuron with relu activation
+# this is just a layer wrapper for one neuron to make sure the API works
+l = layer(3,1,relu)
+o = l(x)
+
+nodes,depth = buildgraph(o)
+printgraph(nodes,depth)
+
+## make an MLP with two layers. 
+# note the last layer has a linear output
+m = mlp(3,[1,1])
 X = [x]
-y = 1.0
+y = [1.0]
 m.(X)
 fit(m,X,y)
 
@@ -68,6 +93,9 @@ m = mlp(2, [16, 16, 1])
 l,_ = objective(m,X,y)
 backward(l)
 
-loss(m,X,y)
 
 fit(m,X,y)
+
+y_fit = 
+
+sum(sign.(getfield.(m.(X),:data)).==y_fit)/length(y)

@@ -1,18 +1,21 @@
 
 function prettyvalue(x::Value)
     op_str = x.op=="" ? " " : x.op
-    str = string(round(x.data,digits = 2)," (gr: ",round(x.grad,digits=2),", op: ",op_str,")")
+    str = string(round(x.data,sigdigits = 2)," (gr: ",round(x.grad,sigdigits=2),", op: ",op_str,")")
     return str
 end
 Base.show(io::IO, x::Value) = print(io,"$(prettyvalue(x))")
 Base.show(io::IO,m::MIME"text/plain", x::Value) = print(io,"$(prettyvalue(x))")
 
 function prettylayer(l::Layer)
-    str = "layer: ($(l.inputs), $(l.outputs))"
+    str = "layer with ($(l.inputs) in, $(l.outputs) out) of $(eltype(l.neurons))"
     return str
 end
 Base.show(io::IO, x::Layer) = print(io,"$(prettylayer(x))")
 Base.show(io::IO,m::MIME"text/plain", x::Layer) = print(io,"$(prettylayer(x))")
+
+Base.show(io::IO, x::Backward) = print(io,"backward function")
+Base.show(io::IO,m::MIME"text/plain", x::Backward) = print(io,"backward function")
 
 
 """
@@ -69,6 +72,6 @@ function printgraph(nodes,depth)
     out = [(e,l) for (l,e) in zip(lines,edges)]
     out = collect(Iterators.flatten(out))
 
-    print("\nSimple Polytree Viewer: \n\n",join(out[2:end],"\n"))
+    print("\nTree:\n----- \n\n",join(out[2:end],"\n"))
     return nothing
 end
