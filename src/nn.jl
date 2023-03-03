@@ -5,8 +5,8 @@ mutable struct Neuron{T<:AbstractFloat,F<:Union{Function,Nothing}}
 end
 
 """
-    neuron(n::Int)
-Construct a neuron with `n` inputs (features)
+    neuron(n::Int,activation=tanh)
+Construct a neuron with `n` inputs (features) and activation function `activation`.
 """
 function neuron(n::Int,activation=tanh)
     w=value.(rand(n).*2 .-1)
@@ -34,7 +34,7 @@ end
     layer(n_in::Int,n_out::Int)
 Construct a layer of neurons. `n_in` is the number of inputs to each neuron in
 the layer. `n_out` is the number of neurons in the layer (i.e. the number of
-outputs of that layer)
+outputs of that layer). Neurons in the layer all have activation function `activation`.
 
 layer(5,10) creates a layer with 10 neurons, each with 5 inputs.
 
