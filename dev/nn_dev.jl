@@ -87,6 +87,8 @@ parameters(n)
 parameters(l)
 p = parameters(m)
 
+# the fitting
+using Micrograd
 X,y = getmoons()
 
 m = mlp(2, [16, 16, 1])

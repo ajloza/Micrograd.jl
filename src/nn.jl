@@ -132,6 +132,10 @@ end
 fit(m,X,y,...)
 
 simple gradient descent with dynamic learning rate.
+
+This is inefficient. the computational graph doesn't fundamentally change in topology but we're remaking it every time.
+Place #1 to start optimizing is make each operation that goes into m(X) inplace starting with n!(out,X)
+
 """
 function fit(m,X,y;loss_type="hinge",reg_type="l2",n_iter=100)
     
