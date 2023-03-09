@@ -1,6 +1,6 @@
 # Micrograd
 
-An port of Andrej Karpathy's Micrograd https://github.com/karpathy/micrograd to Julia. It has:
+A port of Andrej Karpathy's Micrograd https://github.com/karpathy/micrograd to Julia. It has:
  - reverse mode autodiff
  - basic NN
  - No dependencies.
