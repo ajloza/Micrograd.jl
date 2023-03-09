@@ -1,6 +1,6 @@
 # Micrograd
 
-An implementation of Andrej Karpathy's Micrograd https://github.com/karpathy/micrograd in Julia. 
+An port of Andrej Karpathy's Micrograd https://github.com/karpathy/micrograd to Julia. It has:
  - reverse mode autodiff
  - basic NN
  - No dependencies.
@@ -9,7 +9,7 @@ Why? With such a clear guide in python, switching languages seemed closer to cre
 >"What I cannot create, I do not understand"
 \- RPF
 
-This is hopefully useful for education purposes. Any bugs were likely introduced in the porting from Andrej's implementation.
+This is hopefully useful for education purposes. Any bugs were likely introduced by me in the porting from Andrej's implementation.
 
 ## Notes
 
