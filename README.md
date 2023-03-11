@@ -11,6 +11,9 @@ Why? With such a clear guide in python, switching languages seemed closer to cre
 
 This is hopefully useful for education purposes. Any bugs were likely introduced by me in the porting from Andrej's implementation.
 
+<img width="600" alt="microgradjl" src="https://user-images.githubusercontent.com/77357202/224461178-562ae5e3-1eec-48e9-b4f3-6b5ae221a74d.png">
+
+
 ## Notes
 
 1. This initially done for myself and for a local teaching tool, but I'm placing it here in case others find it useful.
